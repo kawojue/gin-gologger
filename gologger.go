@@ -10,6 +10,8 @@ import (
 // It takes "dev" on development mode
 // It takes "release" on release mode
 func Logger(mode string) gin.HandlerFunc {
+	color.NoColor = false
+
 	return func(ctx *gin.Context) {
 		var statusColor *color.Color
 
