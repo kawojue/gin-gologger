@@ -7,8 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// It takes "dev" on development mode
-// It takes "release" on release mode
+// It takes "dev" on development mode.
+// It takes "release" on release mode.
 func Logger(mode string) gin.HandlerFunc {
 	color.NoColor = false
 
