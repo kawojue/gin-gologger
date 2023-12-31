@@ -1,4 +1,4 @@
-module github.com/kawojue/gologger
+module github.com/kawojue/gin-gologger
 
 go 1.21.5
 
