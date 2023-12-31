@@ -25,9 +25,9 @@ func Logger(mode string) gin.HandlerFunc {
 		case statusCode < 300:
 			statusColor = color.New(color.FgGreen)
 		case statusCode < 400:
-			statusColor = color.New(color.FgGreen)
+			statusColor = color.New(color.FgYellow)
 		case statusCode < 500:
-			statusColor = color.New(color.FgGreen)
+			statusColor = color.New(color.FgMagenta)
 		default:
 			statusColor = color.New(color.FgRed)
 		}
