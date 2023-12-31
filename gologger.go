@@ -16,8 +16,8 @@ func Logger(mode string) gin.HandlerFunc {
 		startTime := time.Now()
 		path := ctx.Request.URL.Path
 		method := ctx.Request.Method
-		statusCode := ctx.Writer.Status()
 		remoteAddr := ctx.ClientIP()
+		statusCode := ctx.Writer.Status()
 
 		switch {
 		case statusCode < 200:
@@ -37,9 +37,15 @@ func Logger(mode string) gin.HandlerFunc {
 		elapsedTime := time.Since(startTime)
 
 		if mode == "release" {
-			statusColor.Printf("\n[%d]\t|\t%s\t|\t%s\t|\t%v\t|\t%s\n", statusCode, method, path, elapsedTime, remoteAddr)
+			statusColor.Printf(
+				"\n[%d]\t|\t%s\t|\t%s\t|\t%v\t|\t%s\n",
+				statusCode, method, path, elapsedTime, remoteAddr,
+			)
 		} else {
-			statusColor.Printf("\n[%d]\t|\t%s\t|\t%s\n", statusCode, method, path)
+			statusColor.Printf(
+				"\n[%d]\t|\t%s\t|\t%s\n",
+				statusCode, method, path,
+			)
 		}
 	}
 }
