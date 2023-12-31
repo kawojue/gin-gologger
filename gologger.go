@@ -38,13 +38,13 @@ func Logger(mode string) gin.HandlerFunc {
 
 		if mode == "release" {
 			statusColor.Printf(
-				"\n[%d]\t|\t%s\t|\t%s\t|\t%v\t|\t%s\n",
-				statusCode, method, path, elapsedTime, remoteAddr,
+				"\n[%s]\t|\t%d\t|\t%s\t|\t%v\t|\t%s\n",
+				method, statusCode, path, elapsedTime, remoteAddr,
 			)
 		} else {
 			statusColor.Printf(
-				"\n[%d]\t|\t%s\t|\t%s\n",
-				statusCode, method, path,
+				"\n[%s]\t|\t%d\t|\t%s\n",
+				method, statusCode, path,
 			)
 		}
 	}
