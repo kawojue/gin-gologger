@@ -15,41 +15,42 @@ func init() {
 // It takes "release" on release mode.
 func Logger(mode string) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		var statusColor *color.Color
-
 		startTime := time.Now()
 		path := ctx.Request.URL.Path
 		method := ctx.Request.Method
 		remoteAddr := ctx.ClientIP()
-		statusCode := ctx.Writer.Status()
+
+		var statusColor *color.Color
 
 		switch {
-		case statusCode < 200:
+		case ctx.Writer.Status() < 200:
 			statusColor = color.New(color.FgWhite)
-		case statusCode < 300:
+		case ctx.Writer.Status() < 300:
 			statusColor = color.New(color.FgGreen)
-		case statusCode < 400:
+		case ctx.Writer.Status() < 400:
 			statusColor = color.New(color.FgYellow)
-		case statusCode < 500:
+		case ctx.Writer.Status() < 500:
 			statusColor = color.New(color.FgRed)
 		default:
 			statusColor = color.New(color.FgRed)
 		}
 
+		defer func() {
+			elapsedTime := time.Since(startTime)
+
+			if mode == "release" {
+				statusColor.Printf(
+					"\n[%s]\t|\t%d\t|\t%s\t|\t%v\t|\t%s\n",
+					method, ctx.Writer.Status(), path, elapsedTime, remoteAddr,
+				)
+			} else {
+				statusColor.Printf(
+					"\n[%s]\t|\t%d\t|\t%s\n",
+					method, ctx.Writer.Status(), path,
+				)
+			}
+		}()
+
 		ctx.Next()
-
-		elapsedTime := time.Since(startTime)
-
-		if mode == "release" {
-			statusColor.Printf(
-				"\n[%s]\t|\t%d\t|\t%s\t|\t%v\t|\t%s\n",
-				method, statusCode, path, elapsedTime, remoteAddr,
-			)
-		} else {
-			statusColor.Printf(
-				"\n[%s]\t|\t%d\t|\t%s\n",
-				method, statusCode, path,
-			)
-		}
 	}
 }
