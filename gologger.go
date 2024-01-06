@@ -11,8 +11,9 @@ func init() {
 	color.NoColor = false
 }
 
-// It takes "dev" on development mode.
-// It takes "release" on release mode.
+// Logger returns a Gin middleware that logs information about each incoming request.
+//
+// It takes a mode parameter, which can be "dev" for development mode or "release" for release mode.
 func Logger(mode string) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		startTime := time.Now()
